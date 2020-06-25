@@ -11,7 +11,7 @@ Project Initial Commit Date: 08/04/2020.
 This project was solely created by Thomas Pullar.
 Assistance was provided by one of the TAFE Teachers, who will not be named for privacy reasons.
 
-This project will serve as a template for ToolsRental the final project (Not on GitHub).
+This project will serve as a template for ToolsRental the final project (Workshop Rentals).
 
 Code has been appropriately commented. If any confusions comes from the code refer to "Support or Contact"
 
