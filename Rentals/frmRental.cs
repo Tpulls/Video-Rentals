@@ -18,6 +18,7 @@ namespace Rentals
         long _PKID = 0;
         DataTable _rentalTable = null, _rentalItemsTable = null;
         bool _isNew = false;
+        bool customFormat = false;
 
         #endregion
         #region Constructors
@@ -57,8 +58,17 @@ namespace Rentals
         {
             // Before we create a Child record, we will force our program to create the parent record based on the
             // selections the user made in the Customer ComboBox and DateRented DateTimePicker
-            if (_isNew && _PKID <=0)
+            if (_isNew && _PKID <= 0)
             {
+                // Check if the ComboBox Selected Index is equal to -1
+                // Show a MessageBox and stop the method
+                if (cboCustomer.SelectedIndex == -1)
+                {
+                    MessageBox.Show("No Customer has been selected!",
+                        Properties.Settings.Default.ProjectName,
+                        MessageBoxButtons.OK);
+                    return;
+                }
                 string columnNames = "CustomerId, DateRented, DateReturned";
 
                 // When sending dates in SQL, we will use a string using the format of 'yyy-MM-dd'
@@ -75,7 +85,6 @@ namespace Rentals
                 // record from the database. 
                 InitializeDataTable();
                 gbxItems.Enabled = true;
-
             }
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -90,7 +99,7 @@ namespace Rentals
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete the item?", Properties.Settings.Default.ProjectName, 
+            if (MessageBox.Show("Are you sure you want to delete the item?", Properties.Settings.Default.ProjectName,
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
@@ -106,7 +115,6 @@ namespace Rentals
                 {
                     MessageBox.Show("No Records exists.", Properties.Settings.Default.ProjectName);
                 }
-
             }
         }
 
@@ -183,9 +191,29 @@ namespace Rentals
                 PopulateGrid();
         }
 
+        private void cboCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpDateReturned_ValueChanged(object sender, EventArgs e)
+        {
+            // Check if customer form is true
+            // Else if the DataTimePicker custom format is equal to " "
+            if (customFormat == true)
+            {
+                dtpDateReturned.Format = DateTimePickerFormat.Custom;
+                dtpDateReturned.CustomFormat = "dd-MMM-yyyy";
+            }
+            else if (dtpDateReturned.CustomFormat == " ")
+            {
+                customFormat = true;
+            }
+        }
+
         private void BindControls()
         {
-            txtRentalId.DataBindings.Add("Text", _rentalTable, "RentalId");
+            txtRentalId.DataBindings.Add("Text", _rentalTable, "RentalID");
             cboCustomer.DataBindings.Add("SelectedValue", _rentalTable, "CustomerId");
             dtpDateRented.DataBindings.Add("Text", _rentalTable, "DateRented");
             dtpDateReturned.DataBindings.Add("Text", _rentalTable, "DateReturned");
@@ -195,10 +223,19 @@ namespace Rentals
             if (_isNew)
                 cboCustomer.SelectedIndex = -1;
 
-            if (_isNew || string.IsNullOrEmpty(_rentalTable.Rows[0]["DateReturned"].ToString())) 
+            if (_isNew || string.IsNullOrEmpty(_rentalTable.Rows[0]["DateReturned"].ToString()))
             {
-                dtpDateRented.Format = DateTimePickerFormat.Custom;
+                // Set the DateTimePicker Format to custom
+                // Set the custom format
+                // Set the value to NOW (Add 1 day)
+                /*
+                 * NOTE:
+                 * I do NOW + 1 because if the user selects NOW it doesn't trigger
+                 * the ValueChanged Event on the DataTimePicker as it's already selected
+                 */
+                dtpDateReturned.Format = DateTimePickerFormat.Custom;
                 dtpDateReturned.CustomFormat = " ";
+                dtpDateReturned.Value = DateTime.Now.AddDays(1);
             }
         }
     }

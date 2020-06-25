@@ -42,5 +42,10 @@ namespace Rentals
             // Read the new Property Settings of the ColorTheme
             this.BackColor = Properties.Settings.Default.ColorTheme;
         }
+
+        private void frmSettings_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

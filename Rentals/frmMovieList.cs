@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace Rentals
 {
+
     public partial class frmMovieList : Form
     {
         public frmMovieList()
@@ -57,6 +58,28 @@ namespace Rentals
         {
             frmMovie frm = new frmMovie();
             if (frm.ShowDialog() == DialogResult.OK) PopulateGrid();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete the selected item?", Properties.Settings.Default.ProjectName,
+    MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    long PKID = long.Parse(dgvMovies[0, dgvMovies.CurrentCell.RowIndex].Value.ToString());
+
+                    // Use the DeleteRecord method of the Context class and pass the primary key value to delete
+
+                    Context.DeleteRecord("Movie", "MovieId", PKID.ToString());
+                    PopulateGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No Records exists.", Properties.Settings.Default.ProjectName);
+                }
+
+            }
         }
     }
 }

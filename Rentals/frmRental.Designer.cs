@@ -114,6 +114,7 @@
             this.dtpDateReturned.Name = "dtpDateReturned";
             this.dtpDateReturned.Size = new System.Drawing.Size(175, 27);
             this.dtpDateReturned.TabIndex = 21;
+            this.dtpDateReturned.ValueChanged += new System.EventHandler(this.dtpDateReturned_ValueChanged);
             // 
             // label3
             // 
@@ -206,6 +207,7 @@
             this.cboCustomer.Name = "cboCustomer";
             this.cboCustomer.Size = new System.Drawing.Size(243, 24);
             this.cboCustomer.TabIndex = 25;
+            this.cboCustomer.SelectedIndexChanged += new System.EventHandler(this.cboCustomer_SelectedIndexChanged);
             // 
             // btnCreate
             // 

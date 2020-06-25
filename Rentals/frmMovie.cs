@@ -11,13 +11,14 @@ using System.Windows.Forms;
 
 namespace Rentals
 {
+
     public partial class frmMovie : Form
     {
 
         #region Member Variables
         long _PKID = 0;
         DataTable _movieTable = null;
-        bool _isNew = false; 
+        bool _isNew = false;
 
 
         #endregion
@@ -60,6 +61,13 @@ namespace Rentals
         }
         #endregion
         #region Helper_Methods
+
+        private void setupForm()
+        {
+            InitializeDataTable();
+            BindControls();
+        }
+
         /// <summary>
         /// This method will initialize the DataTable that we will use to bind this form. The data of the table will come from SQL server. 
         /// </summary>
@@ -74,20 +82,15 @@ namespace Rentals
                 {
                 DataRow row = _movieTable.NewRow();
                 _movieTable.Rows.Add(row);
-
                 }
         }
         private void BindControls()
-            {
+        {
             // Binding the textbox txtMovieId with the _movieTable and mapping it to the database field called 'MovieId', and use the 
             // 'Text' property of the Textbox to display the value of the field. 
-            txtMovieId.DataBindings.Add("Text", _movieTable, "MovieId");
             txtMovieName.DataBindings.Add("Text", _movieTable, "MovieName");
-            }
-        private void setupForm()
-        {
-            InitializeDataTable();
-            BindControls();
+            txtMovieId.DataBindings.Add("Text", _movieTable, "MovieId");
+
         }
 
         #endregion
@@ -104,11 +107,11 @@ namespace Rentals
         }
 
 
-
         private void frmMovie_Load(object sender, EventArgs e)
         {
 
         }
+
 
         private void txtMovieId_TextChanged(object sender, EventArgs e)
         {

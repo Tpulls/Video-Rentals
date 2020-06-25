@@ -30,7 +30,7 @@ namespace Controller
         #region Create Database Schema
 
         /// <summary>
-        /// THis method will create the database tables.
+        /// This method will create the database tables.
         /// </summary>
         private static void CreateDatabaseTable()
         {
@@ -56,15 +56,14 @@ namespace Controller
         /// </summary>
         private static void CreateCustomerTable()
         {
-            {
 
                 // Create the Customer table schema
                 string schema = "CustomerID int IDENTITY(1,1) PRIMARY KEY, " + "CustomerName VARCHAR(70), " +
                 "CustomerPhone VARCHAR(70)";
                 // Call the Create DatabaseTable method of the SQL class to create the Customer table
                 _sql.CreateDatabaseTable("Customer", schema);
-            }
-            
+
+
         }
         /// <summary>
         /// This method will create the Rental table. 
@@ -98,14 +97,6 @@ namespace Controller
 
         private static void SeedDatabaseTables()
         {
-
-            // Use the Profilling in this method and improve the perforamnce by making sure that the method calls to SeedMoveiTable,
-            // SeedCustomerTable etc will not be called if tables in SQL already contains dummy data. 
-            // To Help you out in profilling, here's the microsoft link to profilling. 
-            // Go to this link https://docs.microsoft.com/en-us/visualstudio/profiling/?view=vs-2019
-            // Make sure to capture the performance as you need to include the screenshot in your technical Report and compare it with
-            // The screenshot of the 'after' performance.
-
             SeedMovieTable();
             SeedCustomerTable();
             SeedRentalTable();
@@ -163,12 +154,12 @@ namespace Controller
                 "3,'Robert Boyd', '3290 9999'",
             };
             //ColumnNames must watch the prder of the initialize data above
-            string columnNames = "CustomerId, CustomerName, CustomerPhone";
+            string columnNames = "CustomerID, CustomerName, CustomerPhone";
 
             // Loop through the List and push the data to the database table
             foreach (var customer in customers)
             {
-                _sql.InsertRecord("customer", columnNames, customer);
+                _sql.InsertRecord("Customer", columnNames, customer);
             }
         }
 
@@ -186,7 +177,7 @@ namespace Controller
             string columnNames = "MovieID, MovieName";
 
             // Loop through the List and push the data to the database table
-            foreach(var movie in movies)
+            foreach (var movie in movies)
             {
                 _sql.InsertRecord("Movie", columnNames, movie);
             }

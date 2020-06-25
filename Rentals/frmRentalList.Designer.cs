@@ -32,13 +32,14 @@
             this.dgvRentals = new System.Windows.Forms.DataGridView();
             this.lnkAdd = new System.Windows.Forms.LinkLabel();
             this.btnMovieList = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
             // 
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(338, 416);
+            this.btnClose.Location = new System.Drawing.Point(418, 416);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(103, 27);
             this.btnClose.TabIndex = 11;
@@ -54,7 +55,7 @@
             this.dgvRentals.Name = "dgvRentals";
             this.dgvRentals.RowHeadersWidth = 51;
             this.dgvRentals.RowTemplate.Height = 24;
-            this.dgvRentals.Size = new System.Drawing.Size(429, 331);
+            this.dgvRentals.Size = new System.Drawing.Size(509, 331);
             this.dgvRentals.TabIndex = 10;
             this.dgvRentals.DoubleClick += new System.EventHandler(this.dgvRentals_DoubleClick);
             // 
@@ -80,11 +81,24 @@
             this.btnMovieList.TabIndex = 8;
             this.btnMovieList.Text = "Rental List";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(298, 416);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(103, 27);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // frmRentalList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 450);
+            this.ClientSize = new System.Drawing.Size(533, 450);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dgvRentals);
             this.Controls.Add(this.lnkAdd);
@@ -108,5 +122,6 @@
         private System.Windows.Forms.DataGridView dgvRentals;
         private System.Windows.Forms.LinkLabel lnkAdd;
         private System.Windows.Forms.Label btnMovieList;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

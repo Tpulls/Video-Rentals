@@ -64,5 +64,27 @@ namespace Rentals
         {
 
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete the selected item?", Properties.Settings.Default.ProjectName,
+MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    long PKID = long.Parse(dgvCustomers[0, dgvCustomers.CurrentCell.RowIndex].Value.ToString());
+
+                    // Use the DeleteRecord method of the Context class and pass the primary key value to delete
+
+                    Context.DeleteRecord("Customer", "CustomerId", PKID.ToString());
+                    PopulateGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No Records exists.", Properties.Settings.Default.ProjectName);
+                }
+
+            }
+        }
     }
 }

@@ -66,6 +66,7 @@
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
+            this.Load += new System.EventHandler(this.frmSettings_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.frmSettings_Paint);
             this.ResumeLayout(false);
 

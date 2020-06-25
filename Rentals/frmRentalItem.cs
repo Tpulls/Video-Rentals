@@ -85,16 +85,6 @@ namespace Rentals
             this.Close();
         }
 
-        private void txtRentalItemId(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClose_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         #endregion
 
         #region Form Events
@@ -124,7 +114,6 @@ namespace Rentals
                 _dtbRentalItems.Rows.Add(row);
             }
             InitializeMovieTable();
-
         }
 
         #region ComboxBox Events
@@ -182,6 +171,16 @@ namespace Rentals
         }
 
         #endregion
+
+        private void txtRentalItemId(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
     }
 

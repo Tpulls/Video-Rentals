@@ -32,6 +32,7 @@
             this.lnkAdd = new System.Windows.Forms.LinkLabel();
             this.dgvMovies = new System.Windows.Forms.DataGridView();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,11 +81,24 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(145, 432);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(103, 27);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // frmMovieList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(376, 464);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dgvMovies);
             this.Controls.Add(this.lnkAdd);
@@ -108,5 +122,6 @@
         private System.Windows.Forms.LinkLabel lnkAdd;
         private System.Windows.Forms.DataGridView dgvMovies;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

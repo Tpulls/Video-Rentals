@@ -16,6 +16,7 @@ namespace SQLConnection
         Logger _log;
         SqlConnection _sqlConnection = null;
         SqlCommand _sqlCommand = null;
+        int _count;
 
         #endregion
 
@@ -82,38 +83,38 @@ namespace SQLConnection
                 {
                     serverConnection.Open();
                 }
-                    // Run the SQL scruot by using the SQL command object
-                    sqlCommand.ExecuteNonQuery();
+                // Run the SQL scruot by using the SQL command object
+                sqlCommand.ExecuteNonQuery();
 
-                    //Close the SqlConnection as soon as we are done with it
-                    serverConnection.Close();
+                //Close the SqlConnection as soon as we are done with it
+                serverConnection.Close();
             }
         }
-    /// <summary>
-    ///  This will create a ddtabase table on a specified server
-    /// </summary>
-    /// <param name="tableName"></param> The table name to be created
-    /// <param name="tableStructure"></param> The table structure or schema
-    public void CreateDatabaseTable(string tableName, string tableStructure)
-    {
-        try
+        /// <summary>
+        ///  This will create a ddtabase table on a specified server
+        /// </summary>
+        /// <param name="tableName"></param> The table name to be created
+        /// <param name="tableStructure"></param> The table structure or schema
+        public void CreateDatabaseTable(string tableName, string tableStructure)
         {
-            // TODO: Modify the query when Profilling.
-            // This query will create a database table based on the specified table strucutre.
-            string sqlQuery = $"CREATE TABLE {tableName} ({tableStructure})";
-            using (_sqlCommand = new SqlCommand(sqlQuery, _sqlConnection))
+            try
             {
-                if(_sqlConnection.State == ConnectionState.Closed)
-                    _sqlConnection.Open();
-                _sqlCommand.ExecuteNonQuery();
-                _sqlConnection.Close();
+                // TODO: Modify the query when Profilling.
+                // This query will create a database table based on the specified table strucutre.
+                string sqlQuery = $"CREATE TABLE {tableName} ({tableStructure})";
+                using (_sqlCommand = new SqlCommand(sqlQuery, _sqlConnection))
+                {
+                    if (_sqlConnection.State == ConnectionState.Closed)
+                        _sqlConnection.Open();
+                    _sqlCommand.ExecuteNonQuery();
+                    _sqlConnection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
-        catch(Exception e)
-        {
-            Console.WriteLine(e.ToString());
-        }
-    }
         /// <summary>
         /// This method will delete a record in the database
         /// </summary>
@@ -175,12 +176,16 @@ namespace SQLConnection
             {
                 string sqlQuery = $"INSERT INTO {tableName} ({columnNames}) " +
                     $"VALUES ({columnValues}) " +
-                    $"SELECT SCOPE_INDENTITY()";
+                    $"SELECT SCOPE_IDENTITY()";
 
                 using (_sqlCommand = new SqlCommand(sqlQuery, _sqlConnection))
                 {
                     if (_sqlConnection.State == ConnectionState.Closed) _sqlConnection.Open();
-                    Id = (int)(decimal)_sqlCommand.ExecuteScalar();
+                    var output = _sqlCommand.ExecuteScalar();
+                    if (!(output is DBNull))
+                    {
+                        Id = (int)(decimal)output;
+                    }
                     _sqlConnection.Close();
                 }
             }
@@ -201,10 +206,10 @@ namespace SQLConnection
         public int InsertRecord(string tableName, string columnNames, string columnValues)
         {
             int id = 0;
-            string sqlQuery = 
-                $"SET IDENTITY_INSERT {tableName} ON " 
+            string sqlQuery =
+                $"SET IDENTITY_INSERT {tableName} ON "
                 + $"INSERT INTO {tableName} ({columnNames}) "
-                + $"VALUES ({columnValues}) " 
+                + $"VALUES ({columnValues}) "
                 + $"SET IDENTITY_INSERT {tableName} OFF "
                 + $"SELECT SCOPE_IDENTITY()";
             try
@@ -217,7 +222,7 @@ namespace SQLConnection
                     _sqlConnection.Close();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 _log.Error(e.ToString());
@@ -227,7 +232,7 @@ namespace SQLConnection
 
         public void SaveDatabaseTable(DataTable table)
         {
-         try
+            try
             {
                 using (SqlDataAdapter adapter = new SqlDataAdapter($"SELECT * FROM {table.TableName}", _sqlConnection))
                 {
@@ -244,9 +249,9 @@ namespace SQLConnection
                     table.AcceptChanges();
                 }
             }
-            catch(Exception e)
-            { 
-            Console.WriteLine(e.ToString());
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
                 _log.Error(e.ToString());
             }
         }
@@ -300,7 +305,7 @@ namespace SQLConnection
                 // Using a SqlDataAdapater allows us to make a DataTable updateable as it represents a set of data commands
                 // and connection that are used to update a SQL database. 
                 using (SqlDataAdapter adapter = new SqlDataAdapter($"SELECT * FROM {tableName}", _sqlConnection))
-                    {
+                {
                     if (_sqlConnection.State == ConnectionState.Closed)
                         _sqlConnection.Open();
                     // based on the SELECT query above, the SqlAdapter built-in command object will send the Sql query request to SQL.
@@ -329,7 +334,7 @@ namespace SQLConnection
                     }
                 }
 
-            } 
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
@@ -371,16 +376,15 @@ namespace SQLConnection
             return table;
         }
 
-    public DataTable GetDataTable(string sqlQuery, string tableName)
+        public DataTable GetDataTable(string sqlQuery, string tableName)
         {
             DataTable table = new DataTable(tableName);
 
             try
             {
-
                 // Using a SqlDataAdapater allows us to make a DataTable updateable as it represents a set of data commands
                 // and connection that are used to update a SQL database. 
-                using (SqlDataAdapter adapter = new SqlDataAdapter( sqlQuery, _sqlConnection))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(sqlQuery, _sqlConnection))
                 {
                     if (_sqlConnection.State == ConnectionState.Closed)
                         _sqlConnection.Open();
@@ -438,7 +442,6 @@ namespace SQLConnection
             }
             return table;
         }
-
         #endregion 
 
     } //end class
